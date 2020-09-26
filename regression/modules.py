@@ -408,6 +408,9 @@ class Regression(Preset):
     # avg -> true: take average of data
     # avg -> false: select from raw data
     def __init__(self, required, many, centered, avg, x_mono, y_mono, x_val=None, y_val=None, dots=None, rev=False):
+        if Expression.DATA is None:
+            Expression.DATA = Vector(x_val=x_val, y_val=y_val, dots=dots)
+
         super().__init__(
             x_mono=x_mono,
             y_mono=y_mono,
@@ -473,6 +476,7 @@ class Comparison:
 
 class Expression:
     """ formula representing regressed data """
+    DATA = None
 
     # evaluating percentage of similarity
     @staticmethod
@@ -484,37 +488,67 @@ class Expression:
             dif += abs(ar - mean)
         return dif / length
 
-    # calc difference from mean of each coefficient, return the sum
-    # params: coefficients, hook regression callback
+    """ 
+        This Algorithm is waiting to be optimized
+        params: coefficients (len=1 alphabet), hook regression callback, variables (len!=1) 
+        each expression kwargs = {hook:<func>, a:[1, 2], b:[3, 4], pro:1, y_exp:1}
+        decide the most suitable from comparing fitness to original data stored at Expression.DATA as a vector 
+        by hook in self.inspect(), pass in x value from iterated Expression.DATA, the function will return an 
+        y value evaluated from the coefficient rule [a, b], then we store the difference with true data y value, 
+        after iterating DATA, if gained avg is less than previous stored, then it's min, it should be stored. 
+        after coefficients iteration is done, directly assign self.efficient and self.coe for future use 
+        
+        the issue is that it compares to all data when testing each coefficient set [a, b], if we can select a 
+        part of data for comparison by `assigning to Expression.DATA` in Regression initializer, the speed 
+        will be increased at large.
+    """
+
     def __init__(self, **kwargs):
+        effect = None
+        su = None
         self.coe = {}
         # avg: {k: 2, b: 3}
         self.recorders = {}
         # all data: {k: [1, 2, 3], b: [2, 3, 4]}
-        self.dif = {}
+        self.param_error = {}
         self.length = 0
         self.variables = []
-        for kk, vv in kwargs.items():
-            if kk == 'hook':
-                self.hook = vv
-            # allow other variables such as pro to escape
-            elif len(kk) == 1:
-                self.length += 1
-                self.recorders[kk] = vv
-                self.coe[kk] = sum(vv) / float(len(vv))
-                self.dif[kk] = Expression.discrete(vv)
-            else:
-                self.variables.append(vv)
-        # whether the expression is representative for the data
-        self.efficiency = sum(self.dif.values())
+        self.hook = kwargs['hook']
+        del kwargs['hook']
+        del_keys = []
+        for kk in kwargs.keys():
+            if len(kk) != 1:
+                del_keys.append(kk)
+                self.variables.append(kwargs[kk])
+        for kk in del_keys:
+            del kwargs[kk]
+        for uk in range(len(list(kwargs.values())[0])):
+            sub = {}
+            for lk in kwargs.keys():
+                sub[lk] = kwargs[lk][uk]
+            fo = self.inspect(list(sub.values()) + self.variables)
+            eum = 0
+            for ii, xv in enumerate(Expression.DATA.x):
+                try:
+                    eum += abs(Expression.DATA.y[ii] - fo(xv))
+                except ZeroDivisionError:
+                    pass
+            evg = eum / len(Expression.DATA)
+            if effect is None or evg < effect:
+                effect = evg
+                su = sub
+        self.coe = su
+        self.sum_param_error = sum(self.param_error.values())
+        self.efficiency = effect
 
     def __str__(self):
         st = '<Expression>'
         for ss, vv in [
             ['coe', self.coe],
             ['recorders', self.recorders],
-            ['dif', self.dif],
+            ['param_error', self.param_error],
             ['length', self.length],
+            ['sum_param_error', self.sum_param_error],
             ['efficiency', self.efficiency],
         ]:
             st += f'\n\t.{ss}: {vv}'
@@ -558,6 +592,9 @@ class Expression:
         if isinstance(other, Expression):
             return self.efficiency >= other.efficiency
         return self.efficiency >= other
+
+    def inspect(self, li):
+        return self.hook(*li)
 
     # param sequence of regression hook must correspond to pass in sequence coe
     @property
