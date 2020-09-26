@@ -42,7 +42,7 @@ print(my_formula(2))
 <hr />
 
 
-### Linear $y=kx+b$
+### Linear \[y=kx+b\]
 
 ```python
 from regression.regress import linear_regression
