@@ -39,7 +39,7 @@ https://www.codecogs.com/latex/gif.latex?\\y=kx+b
 
 <hr />
 
-> ### if you knows the general equation of the data, it will be faster and more accurate
+> ### if you know the general equation of the data, it will be faster and more accurate
 
 <hr />
 
