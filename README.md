@@ -1,7 +1,7 @@
 # Python Regression 
 
 
-<small> :hot: :hot: :space_invader: :space_invader: :robot: :robot: :see_no_evil: :see_no_evil: :kiss: :kiss: :hear_no_evil: :hear_no_evil: </small>
+<small> :cold_face: :cold_face: :space_invader: :space_invader: :robot: :robot: :see_no_evil: :see_no_evil: :kiss: :kiss: :hear_no_evil: :hear_no_evil: </small>
 
 
 #### *Find a trend in data*
