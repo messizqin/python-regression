@@ -1,7 +1,7 @@
 # Python Regression 
 
 
-<small> :cold_face: :cold_face: :space_invader: :space_invader: :robot: :robot: :see_no_evil: :see_no_evil: :kiss: :kiss: :hear_no_evil: :hear_no_evil: </small>
+<small> :hot: :hot: :space_invader: :space_invader: :robot: :robot: :see_no_evil: :see_no_evil: :kiss: :kiss: :hear_no_evil: :hear_no_evil: </small>
 
 
 #### *Find a trend in data*
@@ -35,6 +35,8 @@ print(my_formula(2))
 # 5.0
 ```
 
+https://www.codecogs.com/latex/gif.latex?\\y=kx+b
+
 <hr />
 
 > ### if you knows the general equation of the data, it will be faster and more accurate
@@ -65,7 +67,9 @@ print(my_formula(2))
 
 <hr />
 
-### Parabola \[y=2x^{2}+3x+1\]
+### Parabola 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y=2x^{2}&plus;3x&plus;1" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y=2x^{2}&plus;3x&plus;1" title="y=2x^{2}+3x+1" /></a>
 
 ```
 from regression.regress import parabola_regression
@@ -86,7 +90,9 @@ print(my_formula(2))
 
 <hr />
 
-### Cubic Parabola $y=0.5x^{3}+2x^{2}+3x+1$
+### Cubic Parabola 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y=0.5x^{3}&plus;2x^{2}&plus;3x&plus;1" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y=0.5x^{3}&plus;2x^{2}&plus;3x&plus;1" title="y=0.5x^{3}+2x^{2}+3x+1" /></a>
 
 ```
 from regression.regress import cubic_regression
@@ -110,10 +116,15 @@ print(my_formula(2))
 >  * parabola
 >  * cubic
 >  * quadratic
-> they have similarities such that $y=ax^{n} + bx^{n-1} + cx^{n-2}...$
+> they have similarities such that 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y=ax^{n}&space;&plus;&space;bx^{n-1}&space;&plus;&space;cx^{n-2}..." target="_blank"><img src="https://latex.codecogs.com/gif.latex?y=ax^{n}&space;&plus;&space;bx^{n-1}&space;&plus;&space;cx^{n-2}..." title="y=ax^{n} + bx^{n-1} + cx^{n-2}..." /></a>
+
 > they are categorised as `Exponential Parabola`, with a specification to maximum `x exponential`, for the `cubic` function exampled above, instead, we can write following:
 
-### Exponential Parabola $y=ax^{n} + bx^{n-1} + cx^{n-2}...$
+### Exponential Parabola 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y=ax^{n}&space;&plus;&space;bx^{n-1}&space;&plus;&space;cx^{n-2}..." target="_blank"><img src="https://latex.codecogs.com/gif.latex?y=ax^{n}&space;&plus;&space;bx^{n-1}&space;&plus;&space;cx^{n-2}..." title="y=ax^{n} + bx^{n-1} + cx^{n-2}..." /></a>
 
 ```python
 from regression.regress import exponential_parabola_regression
@@ -134,7 +145,9 @@ print(my_formula(2))
 
 <hr />
 
-### Truncus $y = \frac{1}{(4x+1)^2}$
+### Truncus 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y&space;=&space;\frac{1}{(4x&plus;1)^2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y&space;=&space;\frac{1}{(4x&plus;1)^2}" title="y = \frac{1}{(4x+1)^2}" /></a>
 
 ```
 from regression.regress import truncus_regression
@@ -156,7 +169,10 @@ print(my_formula(2))
 <hr />
 
 > #### Notice that, 
->  * truncs general equation $y^{y_exp} = \frac{product}{ax^n+bx^{n-1}+..}$
+>  * truncs general equation 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=y^{y_exp}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y^{y_exp}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" title="y^{y_exp} = \frac{product}{ax^n+bx^{n-1}+..}" /></a>
+
 >  * when we know the power on y, the product, the maximum power on x, we can use `Inverse Exponential Parabola`
 >  * take the truncs above as an example, where `y_exp=1`, `product=1`, 'x_exp=2'
 
