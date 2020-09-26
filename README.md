@@ -42,7 +42,9 @@ print(my_formula(2))
 <hr />
 
 
-### Linear \[y=kx+b\]
+### Linear 
+
+![li](https://www.codecogs.com/latex/gif.latex?\\y=kx+b)
 
 ```python
 from regression.regress import linear_regression
