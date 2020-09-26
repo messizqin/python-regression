@@ -44,7 +44,7 @@ print(my_formula(2))
 
 ### Linear 
 
-![li](https://www.codecogs.com/latex/gif.latex?\\y=kx+b)
+<a href="https://www.codecogs.com/eqnedit.php?latex=y=kx&plus;b" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y=kx&plus;b" title="y=kx+b" /></a>
 
 ```python
 from regression.regress import linear_regression
