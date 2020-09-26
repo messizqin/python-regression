@@ -63,7 +63,7 @@ print(my_formula(2))
 
 <hr />
 
-### Parabola $y=2x^{2}+3x+1$
+### Parabola \[y=2x^{2}+3x+1\]
 
 ```
 from regression.regress import parabola_regression
