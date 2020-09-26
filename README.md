@@ -171,7 +171,7 @@ print(my_formula(2))
 > #### Notice that, 
 >  * truncs general equation 
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=y^{y_exp}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y^{y_exp}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" title="y^{y_exp} = \frac{product}{ax^n+bx^{n-1}+..}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=y^{y_{exp}}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y^{y_{exp}}&space;=&space;\frac{product}{ax^n&plus;bx^{n-1}&plus;..}" title="y^{y_{exp}} = \frac{product}{ax^n+bx^{n-1}+..}" /></a>
 
 >  * when we know the power on y, the product, the maximum power on x, we can use `Inverse Exponential Parabola`
 >  * take the truncs above as an example, where `y_exp=1`, `product=1`, 'x_exp=2'
