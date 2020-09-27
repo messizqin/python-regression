@@ -148,8 +148,22 @@ def regression(
 
                 except IndexError:
                     pass
+                except ZeroDivisionError:
+                    pass
 
     return Comparison.compare()
+
+
+# clear past result
+def restart_regression_with_new_data():
+    Comparison.forget()
+    Expression.DATA = None
+    Expression.SIZE = 20
+
+
+# settings, needs to be called at the very start, after restart_regression_with_new_data, before regression
+def set_sample_size(num):
+    Expression.SIZE = num
 
 
 if __name__ == '__main__':
@@ -220,7 +234,4 @@ if __name__ == '__main__':
     #     y=[1 / ((x + 2) ** 2) for x in range(20)],
     # )
     # print(expr.formula(2))
-
-
-
 
