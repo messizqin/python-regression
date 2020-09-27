@@ -400,6 +400,43 @@ class Regression(Preset):
         * the line is assumed to always passes the center
     """
 
+    @staticmethod
+    def store(x_val, y_val, dots):
+        vt = Vector(x_val=x_val, y_val=y_val, dots=dots)
+        xs = vt.x
+        ys = vt.y
+        if Expression.DATA is None:
+            if isinstance(Expression.SIZE, int):
+                if Expression.SIZE >= len(vt):
+                    Expression.DATA = vt
+                else:
+                    Expression.DATA = Vector(
+                        x_val=Brief.extract(array=xs, row=Expression.SIZE, avg=False),
+                        y_val=Brief.extract(array=ys, row=Expression.SIZE, avg=False),
+                    )
+            elif isinstance(Expression.DATA, float):
+                if Expression.SIZE < 0 or Expression.SIZE > 1:
+                    raise ValueError(
+                        '\n'.join([
+                            "Sample Size as a float representing what's the percentage of data take into account",
+                            f"It can't be out of domain [0, 1], invalid value {Expression.SIZE},",
+                            "call set_sample_size() before regression to change it"
+                        ])
+                    )
+                siz = int(Expression.SIZE * len(vt))
+                Expression.DATA = Vector(
+                    x_val=Brief.extract(array=xs, row=siz, avg=False),
+                    y_val=Brief.extract(array=ys, row=siz, avg=False),
+                )
+            else:
+                raise TypeError(
+                    '\n'.join([
+                        'Sample Size can either be a float which is percentage or an int which is exact number',
+                        'it is used in result matching calculation, smaller number makes quicker calculation',
+                        'Default to 20',
+                    ])
+                )
+
     # rev<True>: from center to edge
     # rev<False>: from edge to center
     # x_mono -> false: no regulation
@@ -408,9 +445,8 @@ class Regression(Preset):
     # avg -> true: take average of data
     # avg -> false: select from raw data
     def __init__(self, required, many, centered, avg, x_mono, y_mono, x_val=None, y_val=None, dots=None, rev=False):
-        if Expression.DATA is None:
-            Expression.DATA = Vector(x_val=x_val, y_val=y_val, dots=dots)
-
+        # store data in Expression class variable for finish comparison usage
+        Regression.store(x_val=x_val, y_val=y_val, dots=dots)
         super().__init__(
             x_mono=x_mono,
             y_mono=y_mono,
@@ -473,10 +509,15 @@ class Comparison:
     def compare():
         return min(Comparison.EXPRESSIONS)
 
+    @staticmethod
+    def forget():
+        Comparison.EXPRESSIONS = []
+
 
 class Expression:
     """ formula representing regressed data """
     DATA = None
+    SIZE = 20
 
     # evaluating percentage of similarity
     @staticmethod
@@ -488,21 +529,12 @@ class Expression:
             dif += abs(ar - mean)
         return dif / length
 
-    """ 
-        This Algorithm is waiting to be optimized
-        params: coefficients (len=1 alphabet), hook regression callback, variables (len!=1) 
-        each expression kwargs = {hook:<func>, a:[1, 2], b:[3, 4], pro:1, y_exp:1}
-        decide the most suitable from comparing fitness to original data stored at Expression.DATA as a vector 
-        by hook in self.inspect(), pass in x value from iterated Expression.DATA, the function will return an 
-        y value evaluated from the coefficient rule [a, b], then we store the difference with true data y value, 
-        after iterating DATA, if gained avg is less than previous stored, then it's min, it should be stored. 
-        after coefficients iteration is done, directly assign self.efficient and self.coe for future use 
-        
-        the issue is that it compares to all data when testing each coefficient set [a, b], if we can select a 
-        part of data for comparison by `assigning to Expression.DATA` in Regression initializer, the speed 
-        will be increased at large.
-    """
-
+    # Expression is inited when we got kwargs as, for example,
+    # {hook:<func>, a:[1, 2], b: [3, 4], pro:1, y_exp:1}
+    # coefficients are solitary alphabet
+    # after separation, use each set of dots to work out y value,
+    # compare it to what it should be from sample data
+    # get an efficiency, the lower, the more matching
     def __init__(self, **kwargs):
         effect = None
         su = None
