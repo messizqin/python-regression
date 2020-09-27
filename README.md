@@ -35,8 +35,6 @@ print(my_formula(2))
 # 5.0
 ```
 
-https://www.codecogs.com/latex/gif.latex?\\y=kx+b
-
 <hr />
 
 > ### if you know the general equation of the data, it will be faster and more accurate
