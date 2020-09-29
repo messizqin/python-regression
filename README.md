@@ -20,6 +20,8 @@ place `regression` folder to base level directory.
 
 <hr />
 
+### Just call `regression`, it handles all for you.
+
 ```python
 from regression.regress import regression
 
